@@ -1,0 +1,196 @@
+[
+  {
+    "id": "art-1",
+    "title": "OpenAI Launches Search in ChatGPT to Directly Challenge Google",
+    "source": "The Verge",
+    "url": "https://www.theverge.com/2024/10/31/openai-chatgpt-search-launch",
+    "date": "2024-10-31",
+    "topic": "Artificial Intelligence",
+    "author": "Kylie Robison",
+    "content": "OpenAI has officially launched a search engine inside ChatGPT, transforming its viral chatbot into a direct competitor to Google. The feature gives users up-to-date sports scores, stock quotes, news, and weather, backed by real-time web search and partnerships with news and data providers. Search will be accessible via chatgpt.com as well as mobile and desktop apps. It integrates citations and links directly into natural language answers, letting users click through to original sources.",
+    "key_points": [
+      "Real-time web search integrated directly into ChatGPT interface.",
+      "Includes clickable inline citations and source links for verification.",
+      "Rolled out to Plus and Team subscribers first, with Free users following in coming months."
+    ]
+  },
+  {
+    "id": "art-2",
+    "title": "OpenAI takes on Google with new real-time ChatGPT search feature",
+    "source": "Reuters",
+    "url": "https://www.reuters.com/technology/openai-launches-chatgpt-search-2024-10-31/",
+    "date": "2024-10-31",
+    "topic": "Artificial Intelligence",
+    "author": "Anna Tong",
+    "content": "OpenAI on Thursday added a search feature to ChatGPT, escalating the Microsoft-backed startup's challenge to Google's internet search dominance. The company signed content licensing agreements with major media organizations including Axel Springer, News Corp, Reuters, and the Associated Press to furnish authoritative search results. Chief Executive Sam Altman posted on social media platform X that search is his 'favorite feature' launched in ChatGPT since its debut.",
+    "key_points": [
+      "OpenAI signed media licensing pacts with Axel Springer, News Corp, and Reuters.",
+      "Microsoft-backed startup intensifies direct rivalry with Alphabet's Google.",
+      "CEO Sam Altman called search his favorite ChatGPT release to date."
+    ]
+  },
+  {
+    "id": "art-3",
+    "title": "ChatGPT Search is Here: How It Works and Rollout Timeline",
+    "source": "TechCrunch",
+    "url": "https://techcrunch.com/2024/10/31/chatgpt-search-rollout-details/",
+    "date": "2024-10-31",
+    "topic": "Artificial Intelligence",
+    "author": "Frederic Lardinois",
+    "content": "OpenAI today rolled out ChatGPT search, bringing fine-tuned GPT-4o powered web browsing to all paid subscribers. Search triggers automatically based on queries, or users can manually activate it by clicking the new web search icon. The interface features a 'Sources' sidebar displaying relevant publisher websites with preview thumbnails and direct links, addressing publisher complaints regarding AI citation transparency.",
+    "key_points": [
+      "Powered by a fine-tuned version of GPT-4o trained on synthetic search data.",
+      "Sources sidebar provides thumbnail previews and direct links to publisher articles.",
+      "Users can manually trigger search via a dedicated globe icon."
+    ]
+  },
+  {
+    "id": "art-4",
+    "title": "OpenAI Search Goes Live: What It Means for Publishers and SEO",
+    "source": "Search Engine Land",
+    "url": "https://searchengineland.com/openai-chatgpt-search-seo-impact-447890",
+    "date": "2024-11-01",
+    "topic": "Artificial Intelligence",
+    "author": "Barry Schwartz",
+    "content": "The arrival of native search inside ChatGPT represents a pivotal inflection point for organic search traffic. While OpenAI emphasizes publisher partnerships, webmasters are closely monitoring referral traffic patterns. The system relies on third-party search providers including Bing alongside direct partner feeds to index and retrieve timely content.",
+    "key_points": [
+      "Search relies on underlying Bing indexing infrastructure supplemented by partner feeds.",
+      "Early webmaster analysis points to shifting referral traffic from traditional SERPs to AI conversational citations."
+    ]
+  },
+  {
+    "id": "art-5",
+    "title": "Nvidia Unveils Blackwell Ultra B300 AI Chips with 288GB HBM3e Memory",
+    "source": "Tom's Hardware",
+    "url": "https://www.tomshardware.com/pc-components/gpus/nvidia-blackwell-ultra-b300-288gb",
+    "date": "2024-10-25",
+    "topic": "Hardware & Semiconductors",
+    "author": "Anton Shilov",
+    "content": "Nvidia has officially updated its AI roadmap, detailing the Blackwell Ultra architecture featuring the B300 GPU and GB300 NVL72 rack server configurations. The new B300 accelerators pack up to 288GB of high-bandwidth memory (HBM3e), an enormous leap from the 192GB on standard B200 chips. Mass production is scheduled for the second half of 2025, targeting trillion-parameter generative AI reasoning models.",
+    "key_points": [
+      "Blackwell Ultra B300 offers up to 288GB HBM3e memory, up from 192GB on B200.",
+      "Mass commercial availability expected in H2 2025.",
+      "Designed specifically for memory-intensive inference and long-context reasoning models."
+    ]
+  },
+  {
+    "id": "art-6",
+    "title": "NVIDIA GB300 NVL72 and B300 Server Architecture Specs Detailed",
+    "source": "ServeTheHome",
+    "url": "https://www.servethehome.com/nvidia-gb300-nvl72-blackwell-ultra-specs/",
+    "date": "2024-10-26",
+    "topic": "Hardware & Semiconductors",
+    "author": "Patrick Kennedy",
+    "content": "Nvidia's data center roadmap reveals crucial architecture shifts in the upcoming GB300 NVL72 rack-scale systems. Each system links 72 Blackwell Ultra GPUs with 36 Grace CPUs over NVLink 5 switches. The increase to 288GB HBM3e per package allows entire multi-agent clusters to fit context windows directly in fast device memory without offloading to slower host RAM.",
+    "key_points": [
+      "GB300 NVL72 pairs 72 B300 GPUs with 36 Grace CPUs over fifth-generation NVLink.",
+      "Total rack memory bandwidth and capacity enables massive multi-agent context residency.",
+      "Liquid cooling remains mandatory across all NVL72 deployments."
+    ]
+  },
+  {
+    "id": "art-7",
+    "title": "Nvidia Boosts Blackwell Roadmap as Cloud Giants Accelerate AI Spending",
+    "source": "Bloomberg",
+    "url": "https://www.bloomberg.com/news/articles/2024-10-25/nvidia-blackwell-ultra-demand",
+    "date": "2024-10-25",
+    "topic": "Hardware & Semiconductors",
+    "author": "Ian King",
+    "content": "Nvidia Corp. is updating its upcoming Blackwell chip generation with faster memory variants dubbed 'Ultra' to satisfy relentless demand from hyperscale cloud providers. Microsoft, Meta, Google, and Amazon have pledged over $200 billion in annual capital expenditures, much of it routed into Nvidia's compute clusters. CEO Jensen Huang confirmed demand remains 'insane' across both Hopper and Blackwell lineups.",
+    "key_points": [
+      "Hyperscaler Capex exceeds $200 billion annually driving Nvidia hardware sales.",
+      "Jensen Huang reaffirms extraordinary demand across current and next-gen chip series.",
+      "Nvidia maintaining a strict annual cadence of flagship accelerator upgrades."
+    ]
+  },
+  {
+    "id": "art-8",
+    "title": "European Union Approves First Enforceable AI Act Compliance Guidelines",
+    "source": "Financial Times",
+    "url": "https://www.ft.com/content/eu-ai-act-compliance-guidelines-finalized",
+    "date": "2024-11-10",
+    "topic": "Policy & Regulation",
+    "author": "Javier Espinoza",
+    "content": "European Union regulators have finalized the first binding code of practice for general purpose artificial intelligence (GPAI) systems under the landmark EU AI Act. The guidelines define explicit safety thresholds, copyright disclosure requirements, and systemic risk assessments for frontier AI models exceeding 10^25 FLOPs of training compute. Companies failing to comply face fines up to 7% of global annual turnover.",
+    "key_points": [
+      "First binding code of practice finalized for General Purpose AI providers.",
+      "Requires model documentation, copyright compliance reporting, and red-teaming audits.",
+      "Fines for non-compliance reach up to 7% of worldwide annual turnover or €35 million."
+    ]
+  },
+  {
+    "id": "art-9",
+    "title": "Brussels Unveils Strict Safety and Copyright Rules Under EU AI Act",
+    "source": "Politico Europe",
+    "url": "https://www.politico.eu/article/brussels-eu-ai-act-safety-copyright-rules/",
+    "date": "2024-11-10",
+    "topic": "Policy & Regulation",
+    "author": "Gian Volpicelli",
+    "content": "The European AI Office released detailed operational draft codes on Sunday outlining how global tech companies must comply with Europe's AI Act. Model creators will have to disclose comprehensive summaries of copyrighted content used in pre-training. Furthermore, developers of frontier models deemed to have 'systemic risk' will be required to conduct independent third-party vulnerability testing.",
+    "key_points": [
+      "European AI Office demands detailed summaries of copyright training data.",
+      "Systemic risk threshold triggers mandatory independent third-party evaluations.",
+      "Enforcement begins rolling out in phases through 2025 and 2026."
+    ]
+  },
+  {
+    "id": "art-10",
+    "title": "Tech Giants Given Tight Deadlines as EU AI Act Code of Practice Takes Shape",
+    "source": "The Register",
+    "url": "https://www.theregister.com/2024/11/11/eu_ai_act_code_of_practice/",
+    "date": "2024-11-11",
+    "topic": "Policy & Regulation",
+    "author": "Thomas Claburn",
+    "content": "Tech companies deploying large language models across the European Union must prepare for strict compliance scrutiny as the EU AI Office details its Code of Practice. The draft document sets rigid timelines for reporting serious incidents and demonstrating mitigation against cyberattack vectors and CBRN risks. Industry groups have voiced concerns over compliance overhead.",
+    "key_points": [
+      "Mandatory incident reporting protocols for frontier AI deployments.",
+      "Guidelines mandate technical evaluations for cybersecurity and catastrophic risks.",
+      "Industry trade associations express concern over European competitiveness and reporting burdens."
+    ]
+  },
+  {
+    "id": "art-11",
+    "title": "Anthropic's Claude Can Now Control Your PC Directly via API",
+    "source": "Wired",
+    "url": "https://www.wired.com/story/anthropic-claude-3-5-sonnet-computer-use/",
+    "date": "2024-10-22",
+    "topic": "Artificial Intelligence",
+    "author": "Will Knight",
+    "content": "Anthropic has released an upgraded Claude 3.5 Sonnet alongside a groundbreaking new experimental capability: 'computer use'. Available in public beta via API, the model can look at screen pixels, move the cursor, click buttons, and enter text into desktop applications just like a human operator. Developers can instruct Claude to fill out web forms, conduct research across spreadsheets, and interact with legacy software without custom API integrations.",
+    "key_points": [
+      "Introduces public beta API allowing Claude to control keyboard, mouse, and desktop UI.",
+      "Interacts directly with graphical user interfaces by interpreting screen captures.",
+      "Unlocks automation for legacy desktop software lacking modern APIs."
+    ]
+  },
+  {
+    "id": "art-12",
+    "title": "Anthropic Upgrades Claude 3.5 Sonnet and Introduces Revolutionary 'Computer Use'",
+    "source": "VentureBeat",
+    "url": "https://venturebeat.com/ai/anthropic-claude-3-5-sonnet-computer-use-beta/",
+    "date": "2024-10-22",
+    "topic": "Artificial Intelligence",
+    "author": "Michael Nuñez",
+    "content": "AI startup Anthropic announced major upgrades to its flagship model Claude 3.5 Sonnet, demonstrating broad gains across coding and multi-step reasoning benchmarks. Alongside the upgrade, Anthropic debuted 'Computer Use', an API capability that lets the AI autonomously navigate operating systems, open browsers, and execute keystrokes. Early enterprise testers include Asana, Canva, and Cognition.",
+    "key_points": [
+      "Claude 3.5 Sonnet upgraded with top coding and reasoning benchmark scores.",
+      "Computer Use tested in pilot deployments with Asana, Canva, and DoorDash.",
+      "Safety mechanisms include restricted access to sensitive credentials and rate limits."
+    ]
+  },
+  {
+    "id": "art-13",
+    "title": "We Tested Claude's New 'Computer Use' Feature: Astounding but Early",
+    "source": "Ars Technica",
+    "url": "https://arstechnica.com/ai/2024/10/hands-on-with-claude-computer-use/",
+    "date": "2024-10-23",
+    "topic": "Artificial Intelligence",
+    "author": "Benj Edwards",
+    "content": "Ars Technica spent 24 hours testing Anthropic's new Computer Use API for Claude 3.5 Sonnet. The model successfully completed multi-step browser tasks like finding hotel rates and booking calendar slots, though it occasionally stumbled on rapid popups or unusual UI layouts. Anthropic acknowledges the feature is in public beta and cautions developers to maintain human-in-the-loop safeguards.",
+    "key_points": [
+      "Hands-on testing shows impressive autonomous task completion across multi-window workflows.",
+      "Occasional misclicks and UI latency hiccups confirm necessity of human-in-the-loop oversight.",
+      "Anthropic emphasizes safety protocols to prevent prompt injections from malicious webpages."
+    ]
+  }
+]

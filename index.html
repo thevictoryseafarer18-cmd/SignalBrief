@@ -1,0 +1,1633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SignalBrief | Information Overload Eliminator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #090d16;
+      --surface: #0f172a;
+      --surface-elevated: #1e293b;
+      --surface-hover: #273549;
+      --border: #334155;
+      --border-accent: #3b82f6;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --primary-glow: rgba(59, 130, 246, 0.25);
+      --success: #10b981;
+      --success-glow: rgba(16, 185, 129, 0.2);
+      --warning: #f59e0b;
+      --accent: #8b5cf6;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      padding-bottom: 80px;
+    }
+
+    /* Top Navigation */
+    header {
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .brand-icon {
+      width: 38px;
+      height: 38px;
+      background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      box-shadow: 0 0 16px var(--primary-glow);
+    }
+
+    .brand-title {
+      font-weight: 700;
+      font-size: 1.15rem;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-tag {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      display: block;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: var(--radius-sm);
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.15s ease;
+      text-decoration: none;
+      font-family: inherit;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+      box-shadow: 0 0 12px var(--primary-glow);
+    }
+
+    .btn-secondary {
+      background: var(--surface-elevated);
+      color: var(--text);
+      border-color: var(--border);
+    }
+
+    .btn-secondary:hover {
+      background: var(--surface-hover);
+      border-color: var(--text-dim);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text-muted);
+      border-color: var(--border);
+    }
+
+    .btn-outline:hover {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .btn-sm {
+      padding: 5px 10px;
+      font-size: 0.8rem;
+    }
+
+    /* Main Container */
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    /* Hero / Metrics Ribbon */
+    .metrics-ribbon {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .metric-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 18px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .metric-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--primary);
+      opacity: 0.8;
+    }
+
+    .metric-card.success::before {
+      background: var(--success);
+    }
+
+    .metric-card.accent::before {
+      background: var(--accent);
+    }
+
+    .metric-label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    .metric-value {
+      font-size: 1.85rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+
+    .metric-sub {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      font-weight: 400;
+    }
+
+    /* Control Bar */
+    .control-bar {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 18px 20px;
+      margin-bottom: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .control-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .topic-pills {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .topic-pill {
+      background: var(--surface-elevated);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .topic-pill:hover {
+      color: var(--text);
+      background: var(--surface-hover);
+    }
+
+    .topic-pill.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+      box-shadow: 0 0 10px var(--primary-glow);
+    }
+
+    .topic-pill .badge {
+      background: rgba(0, 0, 0, 0.25);
+      padding: 1px 6px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-family: var(--font-mono);
+    }
+
+    .search-box {
+      position: relative;
+      flex: 1;
+      max-width: 320px;
+      min-width: 220px;
+    }
+
+    .search-input {
+      width: 100%;
+      background: var(--surface-elevated);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 8px 14px 8px 36px;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .search-input:focus {
+      border-color: var(--primary);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-dim);
+      font-size: 14px;
+      pointer-events: none;
+    }
+
+    .view-mode-toggle {
+      display: flex;
+      background: var(--surface-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 3px;
+    }
+
+    .view-btn {
+      padding: 5px 12px;
+      border-radius: 4px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .view-btn.active {
+      background: var(--surface-hover);
+      color: var(--text);
+    }
+
+    /* Section Header */
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title .pill {
+      font-size: 0.75rem;
+      background: var(--surface-elevated);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-weight: 500;
+    }
+
+    /* Developments List */
+    .developments-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .dev-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      position: relative;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .dev-card:hover {
+      border-color: rgba(59, 130, 246, 0.5);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .dev-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+
+    .dev-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+
+    .topic-tag {
+      background: rgba(59, 130, 246, 0.15);
+      color: #60a5fa;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .confidence-tag {
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .corroboration-pill {
+      background: rgba(139, 92, 246, 0.15);
+      color: #c084fc;
+      border: 1px solid rgba(139, 92, 246, 0.3);
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .dev-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      line-height: 1.35;
+      color: var(--text);
+    }
+
+    /* Bottom Line Box */
+    .bottom-line-box {
+      background: linear-gradient(90deg, rgba(59, 130, 246, 0.08) 0%, rgba(15, 23, 42, 0.4) 100%);
+      border-left: 3px solid var(--primary);
+      padding: 12px 16px;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin-bottom: 18px;
+    }
+
+    .bottom-line-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #60a5fa;
+      font-weight: 700;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .bottom-line-text {
+      font-size: 0.95rem;
+      color: #e2e8f0;
+      line-height: 1.45;
+      font-weight: 450;
+    }
+
+    /* Key Takeaways */
+    .takeaways-section {
+      margin-bottom: 20px;
+    }
+
+    .takeaways-heading {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .takeaways-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .takeaway-item {
+      position: relative;
+      padding-left: 20px;
+      font-size: 0.9rem;
+      color: #cbd5e1;
+      line-height: 1.45;
+    }
+
+    .takeaway-item::before {
+      content: '▪';
+      position: absolute;
+      left: 6px;
+      color: var(--primary);
+      font-size: 1.1rem;
+      top: -2px;
+    }
+
+    /* Source Links Grid */
+    .sources-section {
+      border-top: 1px solid var(--border);
+      padding-top: 16px;
+      margin-top: 16px;
+    }
+
+    .sources-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      user-select: none;
+    }
+
+    .sources-toggle:hover {
+      color: var(--text);
+    }
+
+    .sources-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .source-card {
+      background: var(--surface-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.15s ease;
+    }
+
+    .source-card:hover {
+      background: var(--surface-hover);
+      border-color: var(--primary);
+      transform: translateY(-1px);
+    }
+
+    .source-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+
+    .source-outlet {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #93c5fd;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .source-date {
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      font-family: var(--font-mono);
+    }
+
+    .source-card-title {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.35;
+      margin-bottom: 6px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .source-angle {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      border-top: 1px dashed rgba(255, 255, 255, 0.08);
+      padding-top: 6px;
+      margin-top: auto;
+      font-style: italic;
+    }
+
+    /* Modals */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(6px);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      width: 100%;
+      max-width: 600px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .modal-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+
+    .modal-close {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .modal-body {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .form-input, .form-textarea, .form-select {
+      background: var(--surface-elevated);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 0.875rem;
+      font-family: inherit;
+      outline: none;
+    }
+
+    .form-input:focus, .form-textarea:focus, .form-select:focus {
+      border-color: var(--primary);
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .modal-footer {
+      padding: 16px 24px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+
+    /* Toast notification */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--surface-elevated);
+      border: 1px solid var(--success);
+      color: var(--text);
+      padding: 12px 20px;
+      border-radius: var(--radius-md);
+      font-size: 0.875rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 300;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* Empty state */
+    .empty-state {
+      background: var(--surface);
+      border: 1px dashed var(--border);
+      border-radius: var(--radius-lg);
+      padding: 48px 24px;
+      text-align: center;
+      color: var(--text-muted);
+    }
+
+    .empty-state-icon {
+      font-size: 40px;
+      margin-bottom: 12px;
+      opacity: 0.6;
+    }
+
+    @media (max-width: 768px) {
+      .header-inner {
+        flex-direction: column;
+        gap: 12px;
+        align-items: flex-start;
+      }
+      .header-actions {
+        width: 100%;
+        justify-content: space-between;
+      }
+      .metrics-ribbon {
+        grid-template-columns: 1fr 1fr;
+      }
+      .search-box {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <header>
+    <div class="header-inner">
+      <a href="#" class="brand">
+        <div class="brand-icon">⚡</div>
+        <div>
+          <span class="brand-title">SignalBrief</span>
+          <span class="brand-tag">Information Overload Eliminator</span>
+        </div>
+      </a>
+      <div class="header-actions">
+        <button class="btn btn-secondary btn-sm" id="btn-add-article">+ Add Article / URL</button>
+        <button class="btn btn-secondary btn-sm" id="btn-copy-briefing">📋 Copy Briefing</button>
+        <button class="btn btn-primary btn-sm" id="btn-export-markdown">💾 Export Markdown</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Executive Signal Metrics -->
+    <section class="metrics-ribbon">
+      <div class="metric-card">
+        <div class="metric-label">Raw Articles Ingested</div>
+        <div class="metric-value" id="metric-raw-count">13 <span class="metric-sub">articles</span></div>
+      </div>
+      <div class="metric-card accent">
+        <div class="metric-label">Key Developments</div>
+        <div class="metric-value" id="metric-dev-count">4 <span class="metric-sub">stories</span></div>
+      </div>
+      <div class="metric-card success">
+        <div class="metric-label">Noise Eliminated</div>
+        <div class="metric-value" id="metric-reduction-pct">69% <span class="metric-sub">duplicates collapsed</span></div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Executive Reading Time</div>
+        <div class="metric-value" id="metric-time-saved">~3 min <span class="metric-sub">(saved 26 mins)</span></div>
+      </div>
+    </section>
+
+    <!-- Controls: Topics, Search, and Sensitivities -->
+    <section class="control-bar">
+      <div class="control-row">
+        <!-- Topic Selection -->
+        <div class="topic-pills" id="topic-pills-container">
+          <!-- Rendered by JS -->
+        </div>
+
+        <!-- Search input -->
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input type="text" class="search-input" id="search-input" placeholder="Filter by keyword (e.g. OpenAI, Blackwell, EU)...">
+        </div>
+      </div>
+
+      <div class="control-row" style="padding-top: 10px; border-top: 1px solid rgba(255, 255, 255, 0.05); font-size: 0.82rem; color: var(--text-muted);">
+        <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+          <span>Preset Datasets:</span>
+          <button class="btn btn-outline btn-sm" id="btn-load-standard">Default Industry Tech (13)</button>
+          <button class="btn btn-outline btn-sm" id="btn-inject-noise">+ Inject Repetitive Syndicate Noise (17)</button>
+          <button class="btn btn-outline btn-sm" id="btn-clear-all">Reset</button>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <label for="threshold-slider" title="Lower = groups broader related stories; Higher = only strict duplicates">Clustering Sensitivity:</label>
+          <input type="range" id="threshold-slider" min="0.18" max="0.38" step="0.02" value="0.25" style="cursor: pointer; width: 100px;">
+          <span id="threshold-val" style="font-family: var(--font-mono); color: var(--text);">0.25</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section Heading -->
+    <div class="section-header">
+      <div class="section-title">
+        <span>Executive Signal Digest</span>
+        <span class="pill" id="briefing-count-pill">4 developments</span>
+      </div>
+      <div style="font-size: 0.8rem; color: var(--text-dim);">
+        Sorted by multi-source corroboration strength
+      </div>
+    </div>
+
+    <!-- Briefing Development Cards Container -->
+    <div class="developments-container" id="developments-container">
+      <!-- Injected by JavaScript -->
+    </div>
+  </main>
+
+  <!-- Add Article / URL Modal -->
+  <div class="modal-overlay" id="add-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">Ingest Article or URL</h3>
+        <button class="modal-close" id="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label" for="input-url">Article Source URL</label>
+          <input type="url" class="form-input" id="input-url" placeholder="https://example.com/tech-news-article">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="input-title">Headline / Title *</label>
+          <input type="text" class="form-input" id="input-title" placeholder="e.g. OpenAI Announces Next Generation Reasoning System" required>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div class="form-group">
+            <label class="form-label" for="input-source">Publisher / Source Outlet</label>
+            <input type="text" class="form-input" id="input-source" placeholder="e.g. Wall Street Journal">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="input-topic">Topic Category</label>
+            <select class="form-select" id="input-topic">
+              <option value="Artificial Intelligence">Artificial Intelligence</option>
+              <option value="Hardware & Semiconductors">Hardware & Semiconductors</option>
+              <option value="Policy & Regulation">Policy & Regulation</option>
+              <option value="Cloud & Enterprise">Cloud & Enterprise</option>
+              <option value="Financial Tech">Financial Tech</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="input-content">Article Summary or Key Paragraphs *</label>
+          <textarea class="form-textarea" id="input-content" rows="4" placeholder="Paste article text or key takeaway points..." required></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" id="modal-cancel-btn">Cancel</button>
+        <button class="btn btn-primary" id="modal-submit-btn">Ingest & Re-Cluster</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast">
+    <span>✓</span>
+    <span id="toast-message">Briefing copied to clipboard!</span>
+  </div>
+
+  <!-- Client-side Deduplication & Briefing Logic -->
+  <script>
+    // Stopwords for high-signal extraction
+    const STOP_WORDS = new Set([
+      'a', 'about', 'above', 'after', 'again', 'against', 'all', 'am', 'an', 'and', 'any', 'are', 'aren',
+      'as', 'at', 'be', 'because', 'been', 'before', 'being', 'below', 'between', 'both', 'but', 'by',
+      'can', 'could', 'did', 'do', 'does', 'doing', 'down', 'during', 'each', 'few', 'for', 'from',
+      'further', 'had', 'has', 'have', 'having', 'he', 'her', 'here', 'hers', 'herself', 'him', 'himself',
+      'his', 'how', 'i', 'if', 'in', 'into', 'is', 'it', 'its', 'itself', 'just', 'me', 'more', 'most',
+      'my', 'myself', 'no', 'nor', 'not', 'now', 'of', 'off', 'on', 'once', 'only', 'or', 'other',
+      'our', 'ours', 'ourselves', 'out', 'over', 'own', 's', 'same', 'she', 'should', 'so', 'some',
+      'such', 't', 'than', 'that', 'the', 'their', 'theirs', 'them', 'themselves', 'then', 'there',
+      'these', 'they', 'this', 'those', 'through', 'to', 'too', 'under', 'until', 'up', 'very', 'was',
+      'we', 'were', 'what', 'when', 'where', 'which', 'while', 'who', 'whom', 'why', 'will', 'with',
+      'you', 'your', 'yours', 'yourself', 'yourselves', 'new', 'unveils', 'launches', 'announces', 'takes'
+    ]);
+
+    // Initial Default Dataset (Embedded for 100% offline and standalone operation)
+    const DEFAULT_ARTICLES = [
+      {
+        id: "art-1",
+        title: "OpenAI Launches Search in ChatGPT to Directly Challenge Google",
+        source: "The Verge",
+        url: "https://www.theverge.com/2024/10/31/openai-chatgpt-search-launch",
+        date: "2024-10-31",
+        topic: "Artificial Intelligence",
+        author: "Kylie Robison",
+        content: "OpenAI has officially launched a search engine inside ChatGPT, transforming its viral chatbot into a direct competitor to Google. The feature gives users up-to-date sports scores, stock quotes, news, and weather, backed by real-time web search and partnerships with news and data providers. Search will be accessible via chatgpt.com as well as mobile and desktop apps. It integrates citations and links directly into natural language answers, letting users click through to original sources.",
+        key_points: [
+          "Real-time web search integrated directly into ChatGPT interface.",
+          "Includes clickable inline citations and source links for verification.",
+          "Rolled out to Plus and Team subscribers first, with Free users following in coming months."
+        ]
+      },
+      {
+        id: "art-2",
+        title: "OpenAI takes on Google with new real-time ChatGPT search feature",
+        source: "Reuters",
+        url: "https://www.reuters.com/technology/openai-launches-chatgpt-search-2024-10-31/",
+        date: "2024-10-31",
+        topic: "Artificial Intelligence",
+        author: "Anna Tong",
+        content: "OpenAI on Thursday added a search feature to ChatGPT, escalating the Microsoft-backed startup's challenge to Google's internet search dominance. The company signed content licensing agreements with major media organizations including Axel Springer, News Corp, Reuters, and the Associated Press to furnish authoritative search results. Chief Executive Sam Altman posted on social media platform X that search is his 'favorite feature' launched in ChatGPT since its debut.",
+        key_points: [
+          "OpenAI signed media licensing pacts with Axel Springer, News Corp, and Reuters.",
+          "Microsoft-backed startup intensifies direct rivalry with Alphabet's Google.",
+          "CEO Sam Altman called search his favorite ChatGPT release to date."
+        ]
+      },
+      {
+        id: "art-3",
+        title: "ChatGPT Search is Here: How It Works and Rollout Timeline",
+        source: "TechCrunch",
+        url: "https://techcrunch.com/2024/10/31/chatgpt-search-rollout-details/",
+        date: "2024-10-31",
+        topic: "Artificial Intelligence",
+        author: "Frederic Lardinois",
+        content: "OpenAI today rolled out ChatGPT search, bringing fine-tuned GPT-4o powered web browsing to all paid subscribers. Search triggers automatically based on queries, or users can manually activate it by clicking the new web search icon. The interface features a 'Sources' sidebar displaying relevant publisher websites with preview thumbnails and direct links, addressing publisher complaints regarding AI citation transparency.",
+        key_points: [
+          "Powered by a fine-tuned version of GPT-4o trained on synthetic search data.",
+          "Sources sidebar provides thumbnail previews and direct links to publisher articles.",
+          "Users can manually trigger search via a dedicated globe icon."
+        ]
+      },
+      {
+        id: "art-4",
+        title: "OpenAI Search Goes Live: What It Means for Publishers and SEO",
+        source: "Search Engine Land",
+        url: "https://searchengineland.com/openai-chatgpt-search-seo-impact-447890",
+        date: "2024-11-01",
+        topic: "Artificial Intelligence",
+        author: "Barry Schwartz",
+        content: "The arrival of native search inside ChatGPT represents a pivotal inflection point for organic search traffic. While OpenAI emphasizes publisher partnerships, webmasters are closely monitoring referral traffic patterns. The system relies on third-party search providers including Bing alongside direct partner feeds to index and retrieve timely content.",
+        key_points: [
+          "Search relies on underlying Bing indexing infrastructure supplemented by partner feeds.",
+          "Early webmaster analysis points to shifting referral traffic from traditional SERPs to AI conversational citations."
+        ]
+      },
+      {
+        id: "art-5",
+        title: "Nvidia Unveils Blackwell Ultra B300 AI Chips with 288GB HBM3e Memory",
+        source: "Tom's Hardware",
+        url: "https://www.tomshardware.com/pc-components/gpus/nvidia-blackwell-ultra-b300-288gb",
+        date: "2024-10-25",
+        topic: "Hardware & Semiconductors",
+        author: "Anton Shilov",
+        content: "Nvidia has officially updated its AI roadmap, detailing the Blackwell Ultra architecture featuring the B300 GPU and GB300 NVL72 rack server configurations. The new B300 accelerators pack up to 288GB of high-bandwidth memory (HBM3e), an enormous leap from the 192GB on standard B200 chips. Mass production is scheduled for the second half of 2025, targeting trillion-parameter generative AI reasoning models.",
+        key_points: [
+          "Blackwell Ultra B300 offers up to 288GB HBM3e memory, up from 192GB on B200.",
+          "Mass commercial availability expected in H2 2025.",
+          "Designed specifically for memory-intensive inference and long-context reasoning models."
+        ]
+      },
+      {
+        id: "art-6",
+        title: "NVIDIA GB300 NVL72 and B300 Server Architecture Specs Detailed",
+        source: "ServeTheHome",
+        url: "https://www.servethehome.com/nvidia-gb300-nvl72-blackwell-ultra-specs/",
+        date: "2024-10-26",
+        topic: "Hardware & Semiconductors",
+        author: "Patrick Kennedy",
+        content: "Nvidia's data center roadmap reveals crucial architecture shifts in the upcoming GB300 NVL72 rack-scale systems. Each system links 72 Blackwell Ultra GPUs with 36 Grace CPUs over NVLink 5 switches. The increase to 288GB HBM3e per package allows entire multi-agent clusters to fit context windows directly in fast device memory without offloading to slower host RAM.",
+        key_points: [
+          "GB300 NVL72 pairs 72 B300 GPUs with 36 Grace CPUs over fifth-generation NVLink.",
+          "Total rack memory bandwidth and capacity enables massive multi-agent context residency.",
+          "Liquid cooling remains mandatory across all NVL72 deployments."
+        ]
+      },
+      {
+        id: "art-7",
+        title: "Nvidia Boosts Blackwell Roadmap as Cloud Giants Accelerate AI Spending",
+        source: "Bloomberg",
+        url: "https://www.bloomberg.com/news/articles/2024-10-25/nvidia-blackwell-ultra-demand",
+        date: "2024-10-25",
+        topic: "Hardware & Semiconductors",
+        author: "Ian King",
+        content: "Nvidia Corp. is updating its upcoming Blackwell chip generation with faster memory variants dubbed 'Ultra' to satisfy relentless demand from hyperscale cloud providers. Microsoft, Meta, Google, and Amazon have pledged over $200 billion in annual capital expenditures, much of it routed into Nvidia's compute clusters. CEO Jensen Huang confirmed demand remains 'insane' across both Hopper and Blackwell lineups.",
+        key_points: [
+          "Hyperscaler Capex exceeds $200 billion annually driving Nvidia hardware sales.",
+          "Jensen Huang reaffirms extraordinary demand across current and next-gen chip series.",
+          "Nvidia maintaining a strict annual cadence of flagship accelerator upgrades."
+        ]
+      },
+      {
+        id: "art-8",
+        title: "European Union Approves First Enforceable AI Act Compliance Guidelines",
+        source: "Financial Times",
+        url: "https://www.ft.com/content/eu-ai-act-compliance-guidelines-finalized",
+        date: "2024-11-10",
+        topic: "Policy & Regulation",
+        author: "Javier Espinoza",
+        content: "European Union regulators have finalized the first binding code of practice for general purpose artificial intelligence (GPAI) systems under the landmark EU AI Act. The guidelines define explicit safety thresholds, copyright disclosure requirements, and systemic risk assessments for frontier AI models exceeding 10^25 FLOPs of training compute. Companies failing to comply face fines up to 7% of global annual turnover.",
+        key_points: [
+          "First binding code of practice finalized for General Purpose AI providers.",
+          "Requires model documentation, copyright compliance reporting, and red-teaming audits.",
+          "Fines for non-compliance reach up to 7% of worldwide annual turnover or €35 million."
+        ]
+      },
+      {
+        id: "art-9",
+        title: "Brussels Unveils Strict Safety and Copyright Rules Under EU AI Act",
+        source: "Politico Europe",
+        url: "https://www.politico.eu/article/brussels-eu-ai-act-safety-copyright-rules/",
+        date: "2024-11-10",
+        topic: "Policy & Regulation",
+        author: "Gian Volpicelli",
+        content: "The European AI Office released detailed operational draft codes on Sunday outlining how global tech companies must comply with Europe's AI Act. Model creators will have to disclose comprehensive summaries of copyrighted content used in pre-training. Furthermore, developers of frontier models deemed to have 'systemic risk' will be required to conduct independent third-party vulnerability testing.",
+        key_points: [
+          "European AI Office demands detailed summaries of copyright training data.",
+          "Systemic risk threshold triggers mandatory independent third-party evaluations.",
+          "Enforcement begins rolling out in phases through 2025 and 2026."
+        ]
+      },
+      {
+        id: "art-10",
+        title: "Tech Giants Given Tight Deadlines as EU AI Act Code of Practice Takes Shape",
+        source: "The Register",
+        url: "https://www.theregister.com/2024/11/11/eu_ai_act_code_of_practice/",
+        date: "2024-11-11",
+        topic: "Policy & Regulation",
+        author: "Thomas Claburn",
+        content: "Tech companies deploying large language models across the European Union must prepare for strict compliance scrutiny as the EU AI Office details its Code of Practice. The draft document sets rigid timelines for reporting serious incidents and demonstrating mitigation against cyberattack vectors and CBRN risks. Industry groups have voiced concerns over compliance overhead.",
+        key_points: [
+          "Mandatory incident reporting protocols for frontier AI deployments.",
+          "Guidelines mandate technical evaluations for cybersecurity and catastrophic risks.",
+          "Industry trade associations express concern over European competitiveness and reporting burdens."
+        ]
+      },
+      {
+        id: "art-11",
+        title: "Anthropic's Claude Can Now Control Your PC Directly via API",
+        source: "Wired",
+        url: "https://www.wired.com/story/anthropic-claude-3-5-sonnet-computer-use/",
+        date: "2024-10-22",
+        topic: "Artificial Intelligence",
+        author: "Will Knight",
+        content: "Anthropic has released an upgraded Claude 3.5 Sonnet alongside a groundbreaking new experimental capability: 'computer use'. Available in public beta via API, the model can look at screen pixels, move the cursor, click buttons, and enter text into desktop applications just like a human operator. Developers can instruct Claude to fill out web forms, conduct research across spreadsheets, and interact with legacy software without custom API integrations.",
+        key_points: [
+          "Introduces public beta API allowing Claude to control keyboard, mouse, and desktop UI.",
+          "Interacts directly with graphical user interfaces by interpreting screen captures.",
+          "Unlocks automation for legacy desktop software lacking modern APIs."
+        ]
+      },
+      {
+        id: "art-12",
+        title: "Anthropic Upgrades Claude 3.5 Sonnet and Introduces Revolutionary 'Computer Use'",
+        source: "VentureBeat",
+        url: "https://venturebeat.com/ai/anthropic-claude-3-5-sonnet-computer-use-beta/",
+        date: "2024-10-22",
+        topic: "Artificial Intelligence",
+        author: "Michael Nuñez",
+        content: "AI startup Anthropic announced major upgrades to its flagship model Claude 3.5 Sonnet, demonstrating broad gains across coding and multi-step reasoning benchmarks. Alongside the upgrade, Anthropic debuted 'Computer Use', an API capability that lets the AI autonomously navigate operating systems, open browsers, and execute keystrokes. Early enterprise testers include Asana, Canva, and Cognition.",
+        key_points: [
+          "Claude 3.5 Sonnet upgraded with top coding and reasoning benchmark scores.",
+          "Computer Use tested in pilot deployments with Asana, Canva, and DoorDash.",
+          "Safety mechanisms include restricted access to sensitive credentials and rate limits."
+        ]
+      },
+      {
+        id: "art-13",
+        title: "We Tested Claude's New 'Computer Use' Feature: Astounding but Early",
+        source: "Ars Technica",
+        url: "https://arstechnica.com/ai/2024/10/hands-on-with-claude-computer-use/",
+        date: "2024-10-23",
+        topic: "Artificial Intelligence",
+        author: "Benj Edwards",
+        content: "Ars Technica spent 24 hours testing Anthropic's new Computer Use API for Claude 3.5 Sonnet. The model successfully completed multi-step browser tasks like finding hotel rates and booking calendar slots, though it occasionally stumbled on rapid popups or unusual UI layouts. Anthropic acknowledges the feature is in public beta and cautions developers to maintain human-in-the-loop safeguards.",
+        key_points: [
+          "Hands-on testing shows impressive autonomous task completion across multi-window workflows.",
+          "Occasional misclicks and UI latency hiccups confirm necessity of human-in-the-loop oversight.",
+          "Anthropic emphasizes safety protocols to prevent prompt injections from malicious webpages."
+        ]
+      }
+    ];
+
+    // Additional syndicate noise for demo
+    const SYNDICATE_NOISE = [
+      {
+        id: "noise-1",
+        title: "OpenAI ChatGPT Search: What Users Need To Know",
+        source: "Forbes",
+        url: "https://www.forbes.com/sites/technology/chatgpt-search-rollout/",
+        date: "2024-11-01",
+        topic: "Artificial Intelligence",
+        author: "Contributor",
+        content: "ChatGPT search represents OpenAI's entry into live web retrieval, directly rivaling Google Search with linked citations.",
+        key_points: ["ChatGPT launches web search with citations."]
+      },
+      {
+        id: "noise-2",
+        title: "Nvidia's B300 Blackwell Ultra Accelerator Announcement Summary",
+        source: "MarketWatch",
+        url: "https://www.marketwatch.com/story/nvidia-b300-chips",
+        date: "2024-10-26",
+        topic: "Hardware & Semiconductors",
+        author: "News Desk",
+        content: "Nvidia introduced the Blackwell Ultra B300 accelerator with 288GB HBM3e high-bandwidth memory for next-generation AI clusters.",
+        key_points: ["B300 features 288GB HBM3e memory."]
+      },
+      {
+        id: "noise-3",
+        title: "European AI Act: Brussels Releases Model Safety Guidelines",
+        source: "Euractiv",
+        url: "https://www.euractiv.com/section/digital/news/eu-ai-act-draft-rules/",
+        date: "2024-11-11",
+        topic: "Policy & Regulation",
+        author: "Staff",
+        content: "European Union officials published the initial code of practice governing general-purpose AI safety and copyright obligations.",
+        key_points: ["EU code of practice details GPAI compliance."]
+      },
+      {
+        id: "noise-4",
+        title: "Claude 3.5 Sonnet Adds Desktop Computer Use API Beta",
+        source: "InfoWorld",
+        url: "https://www.infoworld.com/article/anthropic-claude-computer-use/",
+        date: "2024-10-23",
+        topic: "Artificial Intelligence",
+        author: "Tech Reporter",
+        content: "Anthropic unveiled upgraded Claude 3.5 Sonnet capable of executing desktop actions, clicking buttons, and entering keystrokes.",
+        key_points: ["Anthropic launches Computer Use API."]
+      }
+    ];
+
+    // State
+    let articles = JSON.parse(JSON.stringify(DEFAULT_ARTICLES));
+    let selectedTopic = "All";
+    let searchQuery = "";
+    let clusterThreshold = 0.25;
+
+    // NLP Utility Functions
+    function tokenize(text) {
+      if (!text) return [];
+      const matches = text.toLowerCase().match(/\b[a-z0-9_\-\.]{2,}\b/g) || [];
+      return matches.filter(w => !STOP_WORDS.has(w));
+    }
+
+    function overlapCoeff(setA, setB) {
+      if (!setA.size || !setB.size) return 0;
+      let intersection = 0;
+      for (const item of setA) {
+        if (setB.has(item)) intersection++;
+      }
+      return intersection / Math.min(setA.size, setB.size);
+    }
+
+    function calcSimilarity(art1, art2) {
+      const t1 = new Set(tokenize(art1.title || ""));
+      const t2 = new Set(tokenize(art2.title || ""));
+      const titleOverlap = overlapCoeff(t1, t2);
+
+      const c1Text = (art1.content || "") + " " + (art1.key_points || []).join(" ");
+      const c2Text = (art2.content || "") + " " + (art2.key_points || []).join(" ");
+      const c1 = new Set(tokenize(c1Text));
+      const c2 = new Set(tokenize(c2Text));
+      const contentOverlap = overlapCoeff(c1, c2);
+
+      const topicMatch = (art1.topic && art1.topic === art2.topic) ? 1.0 : 0.0;
+
+      return (titleOverlap * 0.55) + (contentOverlap * 0.35) + (topicMatch * 0.10);
+    }
+
+    function clusterArticles(rawArticles, threshold) {
+      const clusters = [];
+      for (const article of rawArticles) {
+        let assigned = false;
+        for (const cluster of clusters) {
+          if (cluster.some(member => calcSimilarity(article, member) >= threshold)) {
+            cluster.push(article);
+            assigned = true;
+            break;
+          }
+        }
+        if (!assigned) {
+          clusters.push([article]);
+        }
+      }
+
+      // Convert to briefing cards
+      const briefings = clusters.map((members, idx) => {
+        // Sort by content length / detail
+        members.sort((a, b) => (b.content?.length || 0) - (a.content?.length || 0));
+        const lead = members[0];
+
+        // Deduplicate key takeaways
+        const allPoints = [];
+        for (const a of members) {
+          for (const pt of (a.key_points || [])) {
+            const clean = pt.trim();
+            if (!allPoints.some(existing => isSimilarSentence(clean, existing))) {
+              allPoints.push(clean);
+            }
+          }
+        }
+
+        const bottomLine = generateBottomLine(lead);
+        const sources = members.map(a => ({
+          id: a.id,
+          source: a.source || "Industry Outlet",
+          title: a.title,
+          url: a.url || "#",
+          date: a.date || "Recent",
+          author: a.author || "Staff",
+          coverage_focus: extractSourceAngle(a)
+        }));
+
+        return {
+          id: `dev-${idx + 1}`,
+          topic: lead.topic || "General",
+          headline: lead.title,
+          bottom_line: bottomLine,
+          key_takeaways: allPoints.slice(0, 4),
+          source_count: members.length,
+          sources: sources,
+          confidence_score: Math.min(98, 65 + (members.length * 11))
+        };
+      });
+
+      // Sort by source count (highest signal developments first)
+      briefings.sort((a, b) => b.source_count - a.source_count);
+      return briefings;
+    }
+
+    function isSimilarSentence(s1, s2) {
+      const t1 = new Set(tokenize(s1));
+      const t2 = new Set(tokenize(s2));
+      return overlapCoeff(t1, t2) > 0.55;
+    }
+
+    function extractSourceAngle(article) {
+      const text = ((article.title || "") + " " + (article.content || "")).toLowerCase();
+      if (/\b(seo|referral|traffic|search engine optimization|webmaster)\b/.test(text)) {
+        return "Analyzes search traffic disruption, webmaster referral patterns, and SEO impact.";
+      } else if (/\b(licens\w*|deal|pact|partnerships?)\b/.test(text)) {
+        return "Focuses on publisher content licensing deals and media partnerships.";
+      } else if (/\b(specs?|288gb|hbm3e|nvl72|liquid cooling|grace)\b/.test(text)) {
+        return "Details hardware architectural specs, memory bandwidth, and rack engineering.";
+      } else if (/\b(fines up to|penalt\w*|compliance|code of practice|brussels|gpai|systemic risk)\b/.test(text)) {
+        return "Focuses on regulatory compliance deadlines, audits, and legal fines under EU law.";
+      } else if (/\b(rollout|tier|sidebar|how it works|subscribers?|timeline)\b/.test(text)) {
+        return "Explains feature walkthrough, subscriber tier availability, and user interface.";
+      } else if (/\b(hands-on|tested|stumbled|latency|24 hours|impressive but early)\b/.test(text)) {
+        return "Provides empirical hands-on testing notes, latency quirks, and real-world limits.";
+      } else if (/\b(capex|spending|hyperscale|billion|investors?)\b/.test(text)) {
+        return "Examines cloud hyperscaler capital expenditures and market demand dynamics.";
+      } else if (/\b(api|desktop ui|keystrokes|mouse|computer use)\b/.test(text)) {
+        return "Highlights developer API capabilities and autonomous UI automation.";
+      } else {
+        return "Provides primary news coverage and core announcement details.";
+      }
+    }
+
+    function generateBottomLine(lead) {
+      const content = lead.content || "";
+      let protectedText = content;
+      const abbrevs = ["Corp.", "Inc.", "Ltd.", "Co.", "U.S.", "E.U.", "vs.", "Dr.", "Mr.", "Ms."];
+      for (const ab of abbrevs) {
+        protectedText = protectedText.replaceAll(ab, ab.replace(".", "__DOT__"));
+      }
+      const parts = protectedText.split(/\.\s+/);
+      if (parts.length > 0 && parts[0].trim()) {
+        let first = parts[0].replaceAll("__DOT__", ".").trim();
+        if (!first.endsWith('.')) first += '.';
+        return first;
+      }
+      return lead.title || "";
+    }
+
+    function computeMetrics(totalArticles, clusteredDevelopments) {
+      const rawTimeMins = Math.round(totalArticles * 2.2);
+      const briefingTimeMins = Math.max(1, Math.round(clusteredDevelopments * 0.8));
+      const savedTime = Math.max(0, rawTimeMins - briefingTimeMins);
+      const eliminated = totalArticles - clusteredDevelopments;
+      const reductionPct = totalArticles > 0 ? Math.round((eliminated / totalArticles) * 100) : 0;
+
+      return {
+        totalArticles,
+        keyDevelopments: clusteredDevelopments,
+        eliminated,
+        reductionPct,
+        rawTimeMins,
+        briefingTimeMins,
+        savedTime
+      };
+    }
+
+    // UI Rendering
+    function render() {
+      // 1. Filter articles by selected topic and search query
+      let filtered = articles;
+      if (selectedTopic !== "All") {
+        filtered = filtered.filter(a => (a.topic || "").toLowerCase() === selectedTopic.toLowerCase());
+      }
+      if (searchQuery.trim()) {
+        const q = searchQuery.toLowerCase().trim();
+        filtered = filtered.filter(a => {
+          const haystack = ((a.title || "") + " " + (a.content || "") + " " + (a.source || "") + " " + (a.topic || "")).toLowerCase();
+          return haystack.includes(q);
+        });
+      }
+
+      // 2. Run clustering
+      const developments = clusterArticles(filtered, clusterThreshold);
+      const metrics = computeMetrics(filtered.length, developments.length);
+
+      // 3. Update Metrics Ribbon
+      document.getElementById("metric-raw-count").innerHTML = `${metrics.totalArticles} <span class="metric-sub">articles</span>`;
+      document.getElementById("metric-dev-count").innerHTML = `${metrics.keyDevelopments} <span class="metric-sub">stories</span>`;
+      document.getElementById("metric-reduction-pct").innerHTML = `${metrics.reductionPct}% <span class="metric-sub">duplicates collapsed</span>`;
+      document.getElementById("metric-time-saved").innerHTML = `~${metrics.briefingTimeMins} min <span class="metric-sub">(saved ${metrics.savedTime} mins)</span>`;
+      document.getElementById("briefing-count-pill").innerText = `${developments.length} developments`;
+
+      // 4. Render Topic Pills
+      renderTopicPills();
+
+      // 5. Render Development Cards
+      const container = document.getElementById("developments-container");
+      if (developments.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-state-icon">📡</div>
+            <h3>No matching developments found</h3>
+            <p>Try clearing your search query or selecting a different topic filter.</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = developments.map((dev, i) => `
+        <article class="dev-card" id="${dev.id}">
+          <div class="dev-header">
+            <div>
+              <div class="dev-meta">
+                <span class="topic-tag">${dev.topic}</span>
+                <span class="corroboration-pill">⚡ ${dev.source_count} ${dev.source_count > 1 ? 'Sources Corroborating' : 'Source'}</span>
+                <span class="confidence-tag">✓ ${dev.confidence_score}% Signal Confidence</span>
+              </div>
+              <h2 class="dev-title">${dev.headline}</h2>
+            </div>
+          </div>
+
+          <div class="bottom-line-box">
+            <div class="bottom-line-label">
+              <span>⚡</span> The Bottom Line
+            </div>
+            <p class="bottom-line-text">${dev.bottom_line}</p>
+          </div>
+
+          <div class="takeaways-section">
+            <div class="takeaways-heading">Key Takeaways & Developments</div>
+            <ul class="takeaways-list">
+              ${dev.key_takeaways.map(pt => `<li class="takeaway-item">${pt}</li>`).join("")}
+            </ul>
+          </div>
+
+          <div class="sources-section">
+            <div class="sources-toggle" onclick="toggleSources('${dev.id}')">
+              <span>Verified Sources & Angle Breakdown (${dev.sources.length})</span>
+              <span id="toggle-arrow-${dev.id}">▼</span>
+            </div>
+            <div class="sources-grid" id="sources-grid-${dev.id}">
+              ${dev.sources.map(s => `
+                <a href="${s.url}" target="_blank" rel="noopener noreferrer" class="source-card">
+                  <div>
+                    <div class="source-card-top">
+                      <span class="source-outlet">🔗 ${s.source}</span>
+                      <span class="source-date">${s.date}</span>
+                    </div>
+                    <div class="source-card-title">${s.title}</div>
+                  </div>
+                  <div class="source-angle">${s.coverage_focus}</div>
+                </a>
+              `).join("")}
+            </div>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    function renderTopicPills() {
+      // Get all unique topics with their counts
+      const counts = { "All": articles.length };
+      for (const a of articles) {
+        const top = a.topic || "General";
+        counts[top] = (counts[top] || 0) + 1;
+      }
+
+      const topics = ["All", ...Object.keys(counts).filter(t => t !== "All")];
+      const pillsContainer = document.getElementById("topic-pills-container");
+
+      pillsContainer.innerHTML = topics.map(t => `
+        <button class="topic-pill ${selectedTopic === t ? 'active' : ''}" onclick="setTopic('${t}')">
+          <span>${t}</span>
+          <span class="badge">${counts[t] || 0}</span>
+        </button>
+      `).join("");
+    }
+
+    // Interactive Handlers
+    window.setTopic = function(topic) {
+      selectedTopic = topic;
+      render();
+    };
+
+    window.toggleSources = function(devId) {
+      const grid = document.getElementById(`sources-grid-${devId}`);
+      const arrow = document.getElementById(`toggle-arrow-${devId}`);
+      if (!grid) return;
+      if (grid.style.display === "none") {
+        grid.style.display = "grid";
+        arrow.innerText = "▼";
+      } else {
+        grid.style.display = "none";
+        arrow.innerText = "▶";
+      }
+    };
+
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      document.getElementById("toast-message").innerText = message;
+      toast.classList.add("show");
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 3000);
+    }
+
+    // Markdown Exporter
+    function generateMarkdownBriefingText() {
+      let filtered = articles;
+      if (selectedTopic !== "All") {
+        filtered = filtered.filter(a => (a.topic || "").toLowerCase() === selectedTopic.toLowerCase());
+      }
+      if (searchQuery.trim()) {
+        const q = searchQuery.toLowerCase().trim();
+        filtered = filtered.filter(a => ((a.title || "") + " " + (a.content || "")).toLowerCase().includes(q));
+      }
+      const developments = clusterArticles(filtered, clusterThreshold);
+      const metrics = computeMetrics(filtered.length, developments.length);
+
+      const lines = [];
+      lines.push("# ⚡ Executive Briefing: Industry Signal Digest");
+      lines.push(`**Signal Report:** ${metrics.totalArticles} sources analyzed → ${metrics.keyDevelopments} key developments.`);
+      lines.push(`**Noise Eliminated:** ${metrics.reductionPct}% reduction | ⏱️ ${metrics.savedTime} mins reading time saved.\n`);
+      lines.push("---\n");
+
+      developments.forEach((dev, i) => {
+        lines.push(`## ${i + 1}. ${dev.headline}`);
+        lines.push(`**Topic:** \`${dev.topic}\` | **Corroborating Sources:** ${dev.source_count} | **Confidence:** ${dev.confidence_score}%\n`);
+        lines.push(`> **The Bottom Line:** ${dev.bottom_line}\n`);
+        lines.push("### Key Takeaways");
+        dev.key_takeaways.forEach(pt => lines.push(`- ${pt}`));
+        lines.push("\n### Verified Sources");
+        dev.sources.forEach(s => lines.push(`- **[${s.source}](${s.url})**: *${s.title}* — ${s.coverage_focus}`));
+        lines.push("\n---\n");
+      });
+
+      return lines.join("\n");
+    }
+
+    // Event Listeners
+    document.addEventListener("DOMContentLoaded", () => {
+      render();
+
+      // Search
+      const searchInput = document.getElementById("search-input");
+      searchInput.addEventListener("input", (e) => {
+        searchQuery = e.target.value;
+        render();
+      });
+
+      // Sensitivity slider
+      const slider = document.getElementById("threshold-slider");
+      const sliderVal = document.getElementById("threshold-val");
+      slider.addEventListener("input", (e) => {
+        clusterThreshold = parseFloat(e.target.value);
+        sliderVal.innerText = clusterThreshold.toFixed(2);
+        render();
+      });
+
+      // Preset buttons
+      document.getElementById("btn-load-standard").addEventListener("click", () => {
+        articles = JSON.parse(JSON.stringify(DEFAULT_ARTICLES));
+        selectedTopic = "All";
+        searchQuery = "";
+        searchInput.value = "";
+        render();
+        showToast("Loaded standard industry test dataset (13 articles).");
+      });
+
+      document.getElementById("btn-inject-noise").addEventListener("click", () => {
+        // Append syndicate noise
+        articles = [...JSON.parse(JSON.stringify(DEFAULT_ARTICLES)), ...JSON.parse(JSON.stringify(SYNDICATE_NOISE))];
+        render();
+        showToast("Injected 4 syndicate reposts! Notice noise eliminated jumps to 76%.");
+      });
+
+      document.getElementById("btn-clear-all").addEventListener("click", () => {
+        articles = JSON.parse(JSON.stringify(DEFAULT_ARTICLES));
+        selectedTopic = "All";
+        searchQuery = "";
+        searchInput.value = "";
+        render();
+        showToast("Reset to default briefing view.");
+      });
+
+      // Copy Briefing
+      document.getElementById("btn-copy-briefing").addEventListener("click", () => {
+        const text = generateMarkdownBriefingText();
+        navigator.clipboard.writeText(text).then(() => {
+          showToast("Copied executive briefing to clipboard!");
+        }).catch(() => {
+          showToast("Briefing ready in console / export.");
+        });
+      });
+
+      // Export Markdown
+      document.getElementById("btn-export-markdown").addEventListener("click", () => {
+        const text = generateMarkdownBriefingText();
+        const blob = new Blob([text], { type: "text/markdown;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `SignalBrief-Executive-Digest-${new Date().toISOString().slice(0, 10)}.md`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        showToast("Exported briefing markdown file!");
+      });
+
+      // Modal Controls
+      const modal = document.getElementById("add-modal");
+      document.getElementById("btn-add-article").addEventListener("click", () => {
+        modal.classList.add("open");
+      });
+      document.getElementById("modal-close-btn").addEventListener("click", () => {
+        modal.classList.remove("open");
+      });
+      document.getElementById("modal-cancel-btn").addEventListener("click", () => {
+        modal.classList.remove("open");
+      });
+
+      document.getElementById("modal-submit-btn").addEventListener("click", () => {
+        const title = document.getElementById("input-title").value.trim();
+        const url = document.getElementById("input-url").value.trim() || "https://example.com/source";
+        const source = document.getElementById("input-source").value.trim() || "Industry Post";
+        const topic = document.getElementById("input-topic").value;
+        const content = document.getElementById("input-content").value.trim();
+
+        if (!title || !content) {
+          alert("Please fill in both a Headline and Article summary text.");
+          return;
+        }
+
+        const newArticle = {
+          id: `art-${Date.now()}`,
+          title: title,
+          source: source,
+          url: url,
+          date: new Date().toISOString().slice(0, 10),
+          topic: topic,
+          author: "Contributor",
+          content: content,
+          key_points: [content.split(". ")[0] + "."]
+        };
+
+        articles.unshift(newArticle);
+        modal.classList.remove("open");
+        
+        // Clear fields
+        document.getElementById("input-title").value = "";
+        document.getElementById("input-url").value = "";
+        document.getElementById("input-source").value = "";
+        document.getElementById("input-content").value = "";
+
+        render();
+        showToast(`Ingested "${title.slice(0, 30)}..." and re-clustered briefing!`);
+      });
+    });
+  </script>
+</body>
+</html>

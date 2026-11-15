@@ -1,0 +1,6 @@
+# SignalBrief - Dependencies
+# The core engine and server run entirely on Python 3 standard library.
+# No mandatory external dependencies required.
+
+# Optional development packages:
+pytest>=8.0.0
